@@ -6,6 +6,7 @@ public class FollowPlayer : MonoBehaviour
     [SerializeField] private Vector3 _offset;
     [SerializeField] private int _height;
     [SerializeField] private float _lerpValue = .1f;
+    [SerializeField] private float _minLerpDistance = 1f;
     [SerializeField] private bool _useLookAt = false;
 
     private Transform _transform;
@@ -41,8 +42,12 @@ public class FollowPlayer : MonoBehaviour
 
     private void moveTo(Vector3 targetPosition)
     {
-        targetPosition.x = Mathf.Lerp(_transform.position.x, targetPosition.x, _lerpValue);
-        targetPosition.z = Mathf.Lerp(_transform.position.z, targetPosition.z, _lerpValue);
+        float distance = Vector3.Distance(targetPosition, _transform.position);
+        
+        if (distance > _minLerpDistance) {
+            targetPosition.x = Mathf.Lerp(_transform.position.x, targetPosition.x, _lerpValue);
+            targetPosition.z = Mathf.Lerp(_transform.position.z, targetPosition.z, _lerpValue);
+        }
 
         _transform.position = targetPosition;
     }

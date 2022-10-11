@@ -1,34 +1,48 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FollowPlayer : MonoBehaviour
 {
-    [SerializeField] private Transform transformToFollow;
-    [SerializeField] private int height;
-    [SerializeField] private float lerpValue = .1f;
-    [SerializeField] private bool useLookAt = false;
+    [SerializeField] private Transform _transformToFollow;
+    [SerializeField] private Vector3 _offset;
+    [SerializeField] private int _height;
+    [SerializeField] private float _lerpValue = .1f;
+    [SerializeField] private bool _useLookAt = false;
 
     private Transform _transform;
+    private Vector3 _targetPosition
+    {
+        get
+        {
+            Vector3 targetPosition = _transformToFollow.position;
+            targetPosition.y = _height;
+            targetPosition += _offset;
 
-    public void Start() {
-        _transform = GetComponent<Transform>();
-    }
-
-    public void LateUpdate() {
-        Vector3 targetPosition = transformToFollow.position;
-        targetPosition.y = height;
-
-        MoveTo(targetPosition);
-
-        if (useLookAt) {
-            _transform.LookAt(transformToFollow);
+            return targetPosition;
         }
     }
 
-    private void MoveTo(Vector3 targetPosition) {
-        targetPosition.x = Mathf.Lerp(_transform.position.x, targetPosition.x, lerpValue);
-        targetPosition.z = Mathf.Lerp(_transform.position.z, targetPosition.z, lerpValue);
+    public void Start()
+    {
+        _transform = GetComponent<Transform>();
+
+        _transform.position = _targetPosition;
+        _transform.LookAt(_transformToFollow);
+    }
+
+    public void LateUpdate()
+    {
+        moveTo(_targetPosition);
+
+        if (_useLookAt)
+        {
+            _transform.LookAt(_transformToFollow);
+        }
+    }
+
+    private void moveTo(Vector3 targetPosition)
+    {
+        targetPosition.x = Mathf.Lerp(_transform.position.x, targetPosition.x, _lerpValue);
+        targetPosition.z = Mathf.Lerp(_transform.position.z, targetPosition.z, _lerpValue);
 
         _transform.position = targetPosition;
     }

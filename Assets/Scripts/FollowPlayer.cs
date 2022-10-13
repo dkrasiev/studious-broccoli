@@ -5,7 +5,7 @@ public class FollowPlayer : MonoBehaviour
     [SerializeField] private Transform _transformToFollow;
     [SerializeField] private Vector3 _offset;
     [SerializeField] private int _height;
-    [SerializeField, Range(0, 1)] private float _lerpValue = .1f;
+    [SerializeField, Range(0, 1)] private float _lerpValue = 1f;
     [SerializeField] private float _minLerpDistance = 1f;
     [SerializeField] private bool _useLookAt = false;
 

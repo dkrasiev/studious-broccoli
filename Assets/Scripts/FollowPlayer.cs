@@ -44,7 +44,8 @@ public class FollowPlayer : MonoBehaviour
     {
         float distance = Vector3.Distance(targetPosition, _transform.position);
 
-        if (distance > _minLerpDistance) {
+        if (distance > _minLerpDistance)
+        {
             targetPosition.x = Mathf.Lerp(_transform.position.x, targetPosition.x, _lerpValue);
             targetPosition.z = Mathf.Lerp(_transform.position.z, targetPosition.z, _lerpValue);
         }

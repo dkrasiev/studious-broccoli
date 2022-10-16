@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody _rigidbody;
     private Transform _transform;
     private Transform _cameraTransform;
-    private float _scaledSpeed { get { return _speed * Time.deltaTime; } }
+    private float _scaledSpeed => _speed * Time.deltaTime;
 
     public void Start()
     {

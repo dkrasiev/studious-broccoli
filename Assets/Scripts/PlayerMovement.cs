@@ -8,14 +8,14 @@ public class PlayerMovement : MonoBehaviour
     private Transform _cameraTransform;
     private float _scaledSpeed => _speed * Time.deltaTime;
 
-    public void Start()
+    private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _cameraTransform = Camera.main.GetComponent<Transform>();
         _transform = GetComponent<Transform>();
     }
 
-    public void Update()
+    private void Update()
     {
         Vector3 forward = _transform.position - _cameraTransform.position;
         forward.y = 0;

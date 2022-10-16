@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class AutoTiler : MonoBehaviour
+[RequireComponent(typeof(MeshRenderer))]
+class AutoTiler : MonoBehaviour
 {
     public float xScaleMultiplier = 1;
     public float yScaleMultiplier = 1;
-    private Material _material;
 
     void Start()
     {

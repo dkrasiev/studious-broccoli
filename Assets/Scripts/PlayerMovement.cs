@@ -32,8 +32,5 @@ public class PlayerMovement : MonoBehaviour
             _transform.position += forward * vertical * _scaledSpeed;
             _transform.position += right * horizonal * _scaledSpeed;
         }
-
-        Debug.DrawRay(_transform.position, forward * vertical * _speed);
-        Debug.DrawRay(_transform.position, right * horizonal * _speed);
     }
 }

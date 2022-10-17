@@ -27,9 +27,13 @@ public class PlayerMovement : MonoBehaviour
         float horizonal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
-        if (horizonal != 0 || vertical != 0) {
-            _transform.Translate(forward * vertical * _scaledSpeed);
-            _transform.Translate(right * horizonal * _scaledSpeed);
+        if (horizonal != 0 || vertical != 0)
+        {
+            _transform.position += forward * vertical * _scaledSpeed;
+            _transform.position += right * horizonal * _scaledSpeed;
         }
+
+        Debug.DrawRay(_transform.position, forward * vertical * _speed);
+        Debug.DrawRay(_transform.position, right * horizonal * _speed);
     }
 }

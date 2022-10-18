@@ -3,9 +3,11 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float _speed;
+    [SerializeField] private float _rotationSpeed;
     private Rigidbody _rigidbody;
     private Transform _transform;
     private Transform _cameraTransform;
+    private Quaternion _targetRotation = Quaternion.identity;
     private float _scaledSpeed => _speed * Time.deltaTime;
 
     private void Start()
@@ -27,10 +29,15 @@ public class PlayerMovement : MonoBehaviour
         float horizonal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
+        Vector3 movementDirection = (forward * vertical + right * horizonal).normalized * _scaledSpeed;
+
         if (horizonal != 0 || vertical != 0)
         {
-            _transform.position += forward * vertical * _scaledSpeed;
-            _transform.position += right * horizonal * _scaledSpeed;
+            _transform.position += movementDirection;
+
+            _targetRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
         }
+
+        _transform.rotation = Quaternion.Lerp(_transform.rotation, _targetRotation, _rotationSpeed * Time.deltaTime);
     }
 }

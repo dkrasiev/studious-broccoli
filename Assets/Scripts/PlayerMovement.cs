@@ -3,10 +3,12 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float _speed;
+    [SerializeField] private Animator _animator;
     private Rigidbody _rigidbody;
     private Transform _transform;
     private Transform _cameraTransform;
     private float _scaledSpeed => _speed * Time.deltaTime;
+
 
     private void Start()
     {
@@ -31,6 +33,17 @@ public class PlayerMovement : MonoBehaviour
         {
             _transform.position += forward * vertical * _scaledSpeed;
             _transform.position += right * horizonal * _scaledSpeed;
+
+            _animator.SetFloat("speed", _speed);
         }
+        else
+        {
+            _animator.SetFloat("speed", 0f);
+        }
+    }
+
+    public void SetSpeed(float speed)
+    {
+        _speed = speed;
     }
 }

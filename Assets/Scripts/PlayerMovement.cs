@@ -11,7 +11,6 @@ public class PlayerMovement : MonoBehaviour
     private Quaternion _targetRotation = Quaternion.identity;
     private float _scaledSpeed => _speed * Time.deltaTime;
 
-
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -35,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (horizonal != 0 || vertical != 0)
         {
+            _transform.position += movementDirection;
             _targetRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
 
             _animator.SetFloat("speed", _speed);

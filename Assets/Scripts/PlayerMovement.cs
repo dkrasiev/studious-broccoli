@@ -4,11 +4,13 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] private float _rotationSpeed;
+    [SerializeField] private Animator _animator;
     private Rigidbody _rigidbody;
     private Transform _transform;
     private Transform _cameraTransform;
     private Quaternion _targetRotation = Quaternion.identity;
     private float _scaledSpeed => _speed * Time.deltaTime;
+
 
     private void Start()
     {
@@ -33,9 +35,13 @@ public class PlayerMovement : MonoBehaviour
 
         if (horizonal != 0 || vertical != 0)
         {
-            _transform.position += movementDirection;
-
             _targetRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
+
+            _animator.SetFloat("speed", _speed);
+        }
+        else
+        {
+            _animator.SetFloat("speed", 0f);
         }
 
         _transform.rotation = Quaternion.Lerp(_transform.rotation, _targetRotation, _rotationSpeed * Time.deltaTime);
@@ -44,5 +50,10 @@ public class PlayerMovement : MonoBehaviour
     public void SetTargetRotation(Quaternion rotation)
     {
         _targetRotation = rotation;
+    }
+
+    public void SetSpeed(float speed)
+    {
+        _speed = speed;
     }
 }

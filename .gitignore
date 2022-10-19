@@ -63,3 +63,6 @@ crashlytics-build.properties
 
 # vscode
 /.vscode/
+
+# Visual Studio
+.vsconfig

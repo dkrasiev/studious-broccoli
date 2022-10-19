@@ -26,8 +26,8 @@ public class PlayerMovement : MonoBehaviour
         Vector2 right2d = Vector2.Perpendicular(new Vector2(forward.x, forward.z)) * -1;
         Vector3 right = new Vector3(right2d.x, 0, right2d.y);
 
-        float horizonal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+        float horizonal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
 
         Vector3 movementDirection = (forward * vertical + right * horizonal).normalized * _scaledSpeed;
 
@@ -39,5 +39,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
         _transform.rotation = Quaternion.Lerp(_transform.rotation, _targetRotation, _rotationSpeed * Time.deltaTime);
+    }
+
+    public void SetTargetRotation(Quaternion rotation)
+    {
+        _targetRotation = rotation;
     }
 }

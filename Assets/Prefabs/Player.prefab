@@ -201,6 +201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
+  _rotationSpeed: 5
   _animator: {fileID: 8234772667094508472}
 --- !u!1001 &702176393790847782
 PrefabInstance:

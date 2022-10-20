@@ -7,6 +7,7 @@ public class Entity : MonoBehaviour, IDamageable, IKillable
 
     public float Health => _health;
     public float MaxHealth => _maxHealth;
+    public bool IsAlive => _health > 0f;
 
     private void Awake()
     {

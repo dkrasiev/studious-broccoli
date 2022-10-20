@@ -19,7 +19,9 @@ public class Painter : MonoBehaviour
             return;
         }
 
-        if (gameObj.TryGetComponent<Renderer>(out Renderer renderer))
+        Renderer renderer = gameObj.GetComponentInChildren<Renderer>();
+
+        if (renderer)
         {
             if (_lastPaintedRenderer)
             {

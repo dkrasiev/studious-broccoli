@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody _rigidbody;
     private Transform _transform;
     private Transform _cameraTransform;
+    private InputManager _input;
     private Quaternion _targetRotation = Quaternion.identity;
     private float _scaledSpeed => _speed * Time.deltaTime;
 
@@ -16,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         _cameraTransform = Camera.main.GetComponent<Transform>();
         _transform = GetComponent<Transform>();
+        _input = InputManager.Instance;
     }
 
     private void Update()
@@ -27,17 +29,14 @@ public class PlayerMovement : MonoBehaviour
         Vector2 right2d = Vector2.Perpendicular(new Vector2(forward.x, forward.z)) * -1;
         Vector3 right = new Vector3(right2d.x, 0, right2d.y);
 
-        float horizonal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
+        Vector3 movementDirection = (_input.VerticalAxis * forward + _input.HorizonalAxis * right).normalized * _scaledSpeed;
 
-        Vector3 movementDirection = (forward * vertical + right * horizonal).normalized * _scaledSpeed;
-
-        if (horizonal != 0 || vertical != 0)
+        if (movementDirection.magnitude > 0f)
         {
             _transform.position += movementDirection;
-            _targetRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
+            SetTargetRotation(Quaternion.LookRotation(movementDirection, Vector3.up));
 
-            _animator.SetFloat("speed", _speed);
+            _animator.SetFloat("speed", movementDirection.magnitude / Time.deltaTime);
         }
         else
         {

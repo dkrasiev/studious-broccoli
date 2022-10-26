@@ -32,7 +32,7 @@ public class FindEntity : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
 
             if (_playerMovement)
-                _playerMovement.SetTargetRotation(targetRotation);
+                _playerMovement.TargetRotation = targetRotation;
         }
     }
 

@@ -51,6 +51,7 @@ MonoBehaviour:
   _weaponData: {fileID: 11400000, guid: 8d905983a5c3a601683720048eb50fda, type: 2}
   _gunpoint: {fileID: 2206173685754323403}
   _projectile: {fileID: 2945209905937439003, guid: f388bacc8a56dfe33a2c26e6f6ea3b5c, type: 3}
+  equipped: 0
 --- !u!54 &8777889144550815540
 Rigidbody:
   m_ObjectHideFlags: 0

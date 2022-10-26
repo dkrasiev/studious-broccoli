@@ -6,6 +6,8 @@ public class Weapon : MonoBehaviour
     [SerializeField] private Transform _gunpoint;
     [SerializeField] private GameObject _projectile;
 
+    public bool equipped;
+
     private Transform _transform;
 
     public void Awake()

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7457703466835309095}
   m_Layer: 0
-  m_Name: Wepon position
+  m_Name: WeponContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,6 +31,64 @@ Transform:
   m_Father: {fileID: 6721382888657448242}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2468023373627487724
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8423233313163100586}
+  - component: {fileID: 5782816191928827201}
+  - component: {fileID: 5170402472563975012}
+  m_Layer: 0
+  m_Name: WeaponFinder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8423233313163100586
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2468023373627487724}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6721382888657448242}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &5782816191928827201
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2468023373627487724}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5170402472563975012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2468023373627487724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04bd3c8bae85e6f92949a9e01edec0eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4583930899684981335
 GameObject:
   m_ObjectHideFlags: 0
@@ -43,7 +101,7 @@ GameObject:
   - component: {fileID: 5161993146502489483}
   - component: {fileID: 124094227880882655}
   m_Layer: 0
-  m_Name: finder
+  m_Name: EntityFinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -143,6 +201,7 @@ Transform:
   - {fileID: 7457703466835309095}
   - {fileID: 3341458782513012818}
   - {fileID: 1023470265934027981}
+  - {fileID: 8423233313163100586}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -202,8 +261,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8859e3e77fda1fd0180e37d73d73897c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponContainer: {fileID: 7457703466835309095}
-  dropWeaponForce: 3
+  _weaponContainer: {fileID: 7457703466835309095}
+  _weaponFinder: {fileID: 5170402472563975012}
+  _dropWeaponForce: 5
 --- !u!114 &4293895037594318519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,6 +279,7 @@ MonoBehaviour:
   _speed: 5
   _rotationSpeed: 5
   _animator: {fileID: 8234772667094508472}
+  TargetRotation: {x: 0, y: 0, z: 0, w: 1}
 --- !u!1001 &702176393790847782
 PrefabInstance:
   m_ObjectHideFlags: 0

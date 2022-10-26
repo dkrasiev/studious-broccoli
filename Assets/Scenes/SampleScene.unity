@@ -245,6 +245,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TestWeapon (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2206173685250035214, guid: c95b6a223a9ce2ba3a9f8779ad231d0a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 05ebec2a4ba2559318b876292ce5b337, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c95b6a223a9ce2ba3a9f8779ad231d0a, type: 3}
 --- !u!1001 &274311209
@@ -876,6 +880,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6ed7ce390e9ba642beaa922114873da, type: 3}
+--- !u!1 &1623591613 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2206173685250035213, guid: c95b6a223a9ce2ba3a9f8779ad231d0a, type: 3}
+  m_PrefabInstance: {fileID: 1827390056}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1623591617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1623591613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93f5cdb596b89a191ad229e8189b90c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xScaleMultiplier: 1
+  yScaleMultiplier: 1
 --- !u!1 &1644751531
 GameObject:
   m_ObjectHideFlags: 0
@@ -934,7 +957,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f398ef2343fa4e131b0f9c42672a4d03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  JumpKey: 32
   PickupWeaponKey: 101
+  ShootKey: 323
+  DropWeaponKey: 103
+  PickupWeaponKeyPressed:
+    m_PersistentCalls:
+      m_Calls: []
+  JumpKeyPressed:
+    m_PersistentCalls:
+      m_Calls: []
+  ShootKeyPressed:
+    m_PersistentCalls:
+      m_Calls: []
+  DropWeaponKeyPressed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1745069961 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6762059352732020947, guid: d6ed7ce390e9ba642beaa922114873da, type: 3}
@@ -995,6 +1033,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TestWeapon
       objectReference: {fileID: 0}
+    - target: {fileID: 2206173685250035214, guid: c95b6a223a9ce2ba3a9f8779ad231d0a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1f97c81170795c526acc6741e440691f, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c95b6a223a9ce2ba3a9f8779ad231d0a, type: 3}
 --- !u!1 &1852133531
@@ -1194,8 +1236,8 @@ Transform:
   - {fileID: 1745069961}
   - {fileID: 856746271}
   - {fileID: 408329944}
-  - {fileID: 544688760}
   - {fileID: 1985923211}
+  - {fileID: 544688760}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

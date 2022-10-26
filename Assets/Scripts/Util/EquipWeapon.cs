@@ -13,7 +13,7 @@ public class EquipWeapon : MonoBehaviour
         if (weapon != null)
         {
             WeaponController weaponController = GetComponent<WeaponController>();
-            weaponController.EquipWeapon(weapon);
+            weaponController.PickUp(weapon);
         }
     }
 }

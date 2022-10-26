@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 class WeaponController : MonoBehaviour
 {
@@ -6,7 +7,24 @@ class WeaponController : MonoBehaviour
     [SerializeField] private FindWeapon _weaponFinder;
     [SerializeField] private float _dropWeaponForce;
     private Weapon _weapon;
-    private InputManager _input;
+    private PlayerInputActions _input;
+
+    private void OnEnable()
+    {
+        if (_input == null)
+            _input = InputManager.playerInputActions;
+
+        _input.Player.Drop.performed += OnDrop;
+        _input.Player.Interact.performed += OnPickUp;
+        _input.Player.Shoot.performed += OnShoot;
+    }
+
+    private void OnDisable()
+    {
+        _input.Player.Drop.performed -= OnDrop;
+        _input.Player.Interact.performed -= OnPickUp;
+        _input.Player.Shoot.performed -= OnShoot;
+    }
 
     public void PickUp(Weapon weapon)
     {
@@ -26,6 +44,7 @@ class WeaponController : MonoBehaviour
         _weapon.GetComponent<Collider>().enabled = false;
     }
 
+
     public void DropWeapon()
     {
         if (_weapon == null) return;
@@ -42,29 +61,18 @@ class WeaponController : MonoBehaviour
         _weapon = null;
     }
 
-    public void Shoot()
+    private void OnDrop(InputAction.CallbackContext context)
+    {
+        DropWeapon();
+    }
+
+    private void OnShoot(InputAction.CallbackContext context)
     {
         if (_weapon)
             _weapon.Shoot();
     }
 
-    private void Start()
-    {
-        _input = InputManager.Instance;
-
-        _input.ShootKeyPressed.AddListener(Shoot);
-        _input.DropWeaponKeyPressed.AddListener(DropWeapon);
-        _input.PickupWeaponKeyPressed.AddListener(TryPickUp);
-    }
-
-    private void OnDestroy()
-    {
-        _input.ShootKeyPressed.RemoveListener(Shoot);
-        _input.DropWeaponKeyPressed.RemoveListener(DropWeapon);
-        _input.PickupWeaponKeyPressed.RemoveListener(TryPickUp);
-    }
-
-    private void TryPickUp()
+    private void OnPickUp(InputAction.CallbackContext context)
     {
         Weapon weapon = _weaponFinder.ClosestWeapon;
 

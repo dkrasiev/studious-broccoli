@@ -2,19 +2,23 @@ using UnityEngine;
 
 class WeaponController : MonoBehaviour
 {
-    [SerializeField] private Transform weaponContainer;
-    [SerializeField] private float dropWeaponForce;
+    [SerializeField] private Transform _weaponContainer;
+    [SerializeField] private FindWeapon _weaponFinder;
+    [SerializeField] private float _dropWeaponForce;
     private Weapon _weapon;
+    private InputManager _input;
 
-    public void EquipWeapon(Weapon weapon)
+    public void PickUp(Weapon weapon)
     {
         if (_weapon)
             DropWeapon();
 
+        weapon.equipped = true;
+
         _weapon = weapon;
         Transform weaponTransform = _weapon.transform;
 
-        weaponTransform.SetParent(weaponContainer);
+        weaponTransform.SetParent(_weaponContainer);
         weaponTransform.localPosition = Vector3.zero;
         weaponTransform.rotation = transform.rotation;
 
@@ -26,36 +30,45 @@ class WeaponController : MonoBehaviour
     {
         if (_weapon == null) return;
 
-        Rigidbody weaponRigidbody = _weapon.GetComponent<Rigidbody>();
-        _weapon.transform.SetParent(null);
+        Transform weaponTransform = _weapon.transform;
+        weaponTransform.SetParent(null);
 
+        Rigidbody weaponRigidbody = _weapon.GetComponent<Rigidbody>();
         weaponRigidbody.isKinematic = false;
+        weaponRigidbody.AddForce(weaponTransform.forward * _dropWeaponForce, ForceMode.Impulse);
+
+        _weapon.equipped = false;
         _weapon.GetComponent<Collider>().enabled = true;
-        weaponRigidbody.AddForce(_weapon.transform.forward * dropWeaponForce, ForceMode.Impulse);
         _weapon = null;
     }
 
     public void Shoot()
     {
-        if (_weapon == null) return;
-
-        _weapon.Shoot();
+        if (_weapon)
+            _weapon.Shoot();
     }
 
-    private void Update()
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-            Shoot();
+        _input = InputManager.Instance;
 
-        if (Input.GetKeyDown(KeyCode.G))
-            DropWeapon();
+        _input.ShootKeyPressed.AddListener(Shoot);
+        _input.DropWeaponKeyPressed.AddListener(DropWeapon);
+        _input.PickupWeaponKeyPressed.AddListener(TryPickUp);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnDestroy()
     {
-        Weapon weapon = collision.gameObject.GetComponent<Weapon>();
+        _input.ShootKeyPressed.RemoveListener(Shoot);
+        _input.DropWeaponKeyPressed.RemoveListener(DropWeapon);
+        _input.PickupWeaponKeyPressed.RemoveListener(TryPickUp);
+    }
+
+    private void TryPickUp()
+    {
+        Weapon weapon = _weaponFinder.ClosestWeapon;
 
         if (weapon)
-            EquipWeapon(weapon);
+            PickUp(weapon);
     }
 }

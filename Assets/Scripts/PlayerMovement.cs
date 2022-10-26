@@ -5,12 +5,17 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _speed;
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private Animator _animator;
+    public Quaternion TargetRotation = Quaternion.identity;
     private Rigidbody _rigidbody;
     private Transform _transform;
     private Transform _cameraTransform;
     private InputManager _input;
-    private Quaternion _targetRotation = Quaternion.identity;
     private float _scaledSpeed => _speed * Time.deltaTime;
+
+    public void SetSpeed(float speed)
+    {
+        _speed = speed;
+    }
 
     private void Start()
     {
@@ -34,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
         if (movementDirection.magnitude > 0f)
         {
             _transform.position += movementDirection;
-            SetTargetRotation(Quaternion.LookRotation(movementDirection, Vector3.up));
+            TargetRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
 
             _animator.SetFloat("speed", movementDirection.magnitude / Time.deltaTime);
         }
@@ -43,16 +48,6 @@ public class PlayerMovement : MonoBehaviour
             _animator.SetFloat("speed", 0f);
         }
 
-        _transform.rotation = Quaternion.Lerp(_transform.rotation, _targetRotation, _rotationSpeed * Time.deltaTime);
-    }
-
-    public void SetTargetRotation(Quaternion rotation)
-    {
-        _targetRotation = rotation;
-    }
-
-    public void SetSpeed(float speed)
-    {
-        _speed = speed;
+        _transform.rotation = Quaternion.Lerp(_transform.rotation, TargetRotation, _rotationSpeed * Time.deltaTime);
     }
 }

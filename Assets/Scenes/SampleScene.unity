@@ -957,22 +957,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f398ef2343fa4e131b0f9c42672a4d03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JumpKey: 32
-  PickupWeaponKey: 101
-  ShootKey: 323
-  DropWeaponKey: 103
-  PickupWeaponKeyPressed:
-    m_PersistentCalls:
-      m_Calls: []
-  JumpKeyPressed:
-    m_PersistentCalls:
-      m_Calls: []
-  ShootKeyPressed:
-    m_PersistentCalls:
-      m_Calls: []
-  DropWeaponKeyPressed:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!4 &1745069961 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6762059352732020947, guid: d6ed7ce390e9ba642beaa922114873da, type: 3}

@@ -1,50 +1,51 @@
 using UnityEngine;
+using Zenject;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float _speed;
-    [SerializeField] private float _rotationSpeed;
-    [SerializeField] private Animator _animator;
-    public Quaternion TargetRotation = Quaternion.identity;
-    private Rigidbody _rigidbody;
-    private Transform _transform;
-    private Transform _cameraTransform;
-    private float _scaledSpeed => _speed * Time.deltaTime;
-    private PlayerInputActions _input;
+  [SerializeField] private float _speed;
+  [SerializeField] private float _rotationSpeed;
+  [SerializeField] private Animator _animator;
+  public Quaternion TargetRotation = Quaternion.identity;
+  private Rigidbody _rigidbody;
+  private Transform _transform;
+  private Transform _cameraTransform;
+  private float _scaledSpeed => _speed * Time.deltaTime;
 
-    public void SetSpeed(float speed)
+  [Inject]
+  private PlayerInputActions _input;
+
+  public void SetSpeed(float speed)
+  {
+    _speed = speed;
+  }
+
+  private void Start()
+  {
+    _rigidbody = GetComponent<Rigidbody>();
+    _cameraTransform = Camera.main.GetComponent<Transform>();
+    _transform = GetComponent<Transform>();
+  }
+
+  private void Update()
+  {
+    Vector3 forward = _transform.position - _cameraTransform.position;
+    forward.y = 0;
+    forward.Normalize();
+
+    Vector2 right2d = Vector2.Perpendicular(new Vector2(forward.x, forward.z)) * -1;
+    Vector3 right = new Vector3(right2d.x, 0, right2d.y);
+
+    Vector2 input = _input.Player.Movement.ReadValue<Vector2>();
+    Vector3 movementDirection = (forward * input.y + right * input.x).normalized * _scaledSpeed;
+
+    if (movementDirection.magnitude > 0f)
     {
-        _speed = speed;
+      _transform.position += movementDirection;
+      TargetRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
     }
 
-    private void Start()
-    {
-        _rigidbody = GetComponent<Rigidbody>();
-        _cameraTransform = Camera.main.GetComponent<Transform>();
-        _transform = GetComponent<Transform>();
-
-        _input = InputManager.playerInputActions;
-    }
-
-    private void Update()
-    {
-        Vector3 forward = _transform.position - _cameraTransform.position;
-        forward.y = 0;
-        forward.Normalize();
-
-        Vector2 right2d = Vector2.Perpendicular(new Vector2(forward.x, forward.z)) * -1;
-        Vector3 right = new Vector3(right2d.x, 0, right2d.y);
-
-        Vector2 input = _input.Player.Movement.ReadValue<Vector2>();
-        Vector3 movementDirection = (forward * input.y + right * input.x).normalized * _scaledSpeed;
-
-        if (movementDirection.magnitude > 0f)
-        {
-            _transform.position += movementDirection;
-            TargetRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
-        }
-
-        _animator.SetFloat("speed", movementDirection.magnitude / Time.deltaTime);
-        _transform.rotation = Quaternion.Lerp(_transform.rotation, TargetRotation, _rotationSpeed * Time.deltaTime);
-    }
+    _animator.SetFloat("speed", movementDirection.magnitude / Time.deltaTime);
+    _transform.rotation = Quaternion.Lerp(_transform.rotation, TargetRotation, _rotationSpeed * Time.deltaTime);
+  }
 }
